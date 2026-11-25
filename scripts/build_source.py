@@ -10,9 +10,15 @@
 版本号取自 FPK 文件名（与 FPK manifest 内的 version 保持一致），
 sha256 / size 直接取 GitHub Release asset 的 digest / size，不手工填写。
 
+约定（2026-11-25 起）：
+  - 简介只写中文基础字段，不提供 i18n.en-US 覆盖。V2 回退顺序里 en-US
+    排在基础字段之前，只要存在 en-US，中文环境下客户端也会显示英文。
+  - 默认只保留每个应用的最新版本；要拉全部历史版本用 --all-versions。
+  - 每个应用固定配 2 张预览图（真实软件界面），放在 assets/preview/。
+
 用法：
-  python scripts/build_source.py                 # 生成全部历史版本
-  python scripts/build_source.py --latest-only   # 每个应用只保留最新版本
+  python scripts/build_source.py                  # 每个应用只保留最新版本（默认）
+  python scripts/build_source.py --all-versions  # 生成全部历史版本
   python scripts/build_source.py --dry-run       # 只打印统计，不写文件
 """
 
@@ -38,12 +44,7 @@ SOURCE_INFO = {
     "author": "老汪不讲武德",
     "homepage": "https://github.com/wangbujiangwude",
     "description": "OESP 风扇助手与 IP 动态感知的 FnDepot 外部应用源（V2）",
-    "i18n": {
-        "en-US": {
-            "name": "LaoWang's fnOS App Source",
-            "description": "FnDepot V2 external source for OESP Fan Assistant and IP Sense.",
-        }
-    },
+    # 不提供 i18n：让所有语言环境都回退到中文基础字段
 }
 
 # 应用静态元数据。releases 由脚本从 GitHub Releases 自动生成。
@@ -61,6 +62,10 @@ APPS = {
         "platform": ["arm"],
         "categories": ["系统工具", "硬件驱动"],
         "icon_url": "./assets/oesp-fanctl.png",
+        "preview_urls": [
+            "./assets/preview/oesp-fanctl-1.png",
+            "./assets/preview/oesp-fanctl-2.png",
+        ],
         "readme_url": f"https://raw.githubusercontent.com/{OWNER}/oesp-fanctl/main/README.md",
         "bug_report_url": f"https://github.com/{OWNER}/oesp-fanctl/issues",
         "maintainer": "老汪不讲武德",
@@ -69,16 +74,7 @@ APPS = {
         "install_type": "root",
         "is_docker": False,
         "service_port": "",
-        "i18n": {
-            "en-US": {
-                "display_name": "OESP Fan Assistant",
-                "desc": (
-                    "GPIO-based smart fan control for OneThing Cloud OES Plus "
-                    "(Amlogic S922X) running fnOS. Auto temperature control, "
-                    "three modes, debounce and a web dashboard. ARM64 only."
-                ),
-            }
-        },
+        # 不提供 i18n.en-US，避免中文环境下客户端命中英文文案
     },
     "ipsense": {
         "repo": "ipsense-fnos",
@@ -88,11 +84,16 @@ APPS = {
             "fnOS 登录审计、路由器 syslog、端口敲门与敲门网关日志。<br><br>"
             "提供境内 / 境外双地图、IP 来源画像（4 票归属裁决）、五张分析卡，"
             "以及可直接交给 AI 的 Markdown 汇总日志；x86 / ARM64 通用。<br><br>"
-            "<b>只观测、不封禁、不改防火墙、不自动处置</b>；处置完全交给外部 agent 的「提交单」。"
+            "<b>只观测、不封禁、不改防火墙、不自动处置</b>；处置完全交给外部 agent 的「提交单」。<br>"
+            "企鹅群：1132993836"
         ),
         "platform": ["all"],
         "categories": ["系统工具"],
         "icon_url": "./assets/ipsense.png",
+        "preview_urls": [
+            "./assets/preview/ipsense-1.png",
+            "./assets/preview/ipsense-2.png",
+        ],
         "readme_url": f"https://raw.githubusercontent.com/{OWNER}/ipsense-fnos/main/README.md",
         "bug_report_url": f"https://github.com/{OWNER}/ipsense-fnos/issues",
         "maintainer": "老汪不讲武德",
@@ -103,16 +104,7 @@ APPS = {
         "service_port": "",
         # FPK manifest: os_min_version = 1.1.8
         "os_min_version": "1.1.8",
-        "i18n": {
-            "en-US": {
-                "display_name": "IP Sense",
-                "desc": (
-                    "Turns six kinds of fnOS access and scan logs into a clickable map: "
-                    "IP profiles, dual maps, five analytics cards and an AI-ready Markdown "
-                    "summary. Observe only - no blocking, no firewall changes."
-                ),
-            }
-        },
+        # 不提供 i18n.en-US，避免中文环境下客户端命中英文文案
     },
 }
 
@@ -233,14 +225,14 @@ def _app_key_by_repo(repo: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--latest-only", action="store_true", help="每个应用只保留最新版本")
+    ap.add_argument("--all-versions", action="store_true", help="保留全部历史版本（默认只保留最新版本）")
     ap.add_argument("--dry-run", action="store_true", help="只打印统计，不写 fnpack.json")
     args = ap.parse_args()
 
     apps_out = {}
     for key, meta in APPS.items():
         print(f"拉取 {OWNER}/{meta['repo']} 的 Releases …")
-        rels = build_releases(meta["repo"], args.latest_only)
+        rels = build_releases(meta["repo"], not args.all_versions)
         if not rels:
             print(f"  ✗ {key}: 没有可用版本，终止", file=sys.stderr)
             return 1

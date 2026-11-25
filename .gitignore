@@ -5,4 +5,5 @@ __pycache__/
 _shot_*.png
 _proxy_tunnel.py
 _excluded_local/
+_candidates/
 *.bundle
