@@ -1,0 +1,23 @@
+name: Purge jsDelivr CDN cache
+
+# GitHub 仓库根地址模式会经 CDN 加速读取 fnpack.json，而 jsDelivr 对 @main
+# 分支的缓存很长（max-age=604800 / s-maxage=43200）。源更新后主动清缓存，
+# 避免用户仍看到旧版本列表。JSON 直链模式读 raw，不受此影响。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'fnpack.json'
+      - 'assets/**'
+  workflow_dispatch:
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge fnpack.json on jsDelivr
+        run: |
+          echo "Purging jsDelivr cache for ${GITHUB_REPOSITORY}@main/fnpack.json"
+          curl -fsS --max-time 30 \
+            "https://purge.jsdelivr.net/gh/${GITHUB_REPOSITORY}@main/fnpack.json"

@@ -21,16 +21,39 @@
 在 FnDepot 客户端里添加以下任意一种地址：
 
 ```
-# 方式一：GitHub 仓库根地址（客户端会读取仓库根目录的 fnpack.json）
-https://github.com/wangbujiangwude/fndepot-source
-
-# 方式二：JSON 直链
+# 方式一（推荐）：JSON 直链 —— 直接读 raw，源改完立刻生效
 https://raw.githubusercontent.com/wangbujiangwude/fndepot-source/main/fnpack.json
+
+# 方式二：GitHub 仓库根地址 —— 短、好记，但可能受 CDN 缓存延迟影响
+https://github.com/wangbujiangwude/fndepot-source
 ```
 
-仓库根地址模式要求根目录**必须**存在大小写完全一致的 `fnpack.json`；若改用其它文件名或子目录，请给用户提供 JSON 直链，而不是仓库根地址。
+- **直链模式**不强制文件名，内容符合 V1 / V2 结构即可（客户端按内容识别格式，不按文件名）。
+- **仓库根地址模式**有固定要求：根目录**必须**存在大小写完全一致的 `fnpack.json`；客户端优先使用仓库默认分支，GitHub API 不可用时兼容尝试 `main`、`master`；不会探测 `fndepot.json` 等其它索引文件名。若改用其它文件名或子目录，请给用户提供 JSON 直链，而不是仓库根地址。
 
-> 修改源后客户端可能仍显示旧缓存，重新添加源或刷新外部源即可看到全部历史版本、中文简介与预览图。
+> 修改源后客户端可能仍显示旧缓存，**删除该源重新添加**或刷新外部源，即可看到全部历史版本、中文简介与预览图。
+
+### 为什么仓库根地址会「看不到历史版本」
+
+GitHub 仓库文件常被 jsDelivr 这类 CDN 加速，而 CDN 对 `@main` 分支的缓存很长（响应头 `max-age=604800`、`s-maxage=43200`）。本源 2026-11-26 从「仅最新版本」恢复为「全部历史版本」后实测：
+
+| 通道 | 返回内容 |
+| --- | --- |
+| `raw.githubusercontent.com/.../fnpack.json`（直链） | 22306B / 17 版 / 最新 2.0.0 ✅ |
+| `github.com/.../raw/main/fnpack.json` | 22306B / 17 版 / 最新 2.0.0 ✅ |
+| `cdn.jsdelivr.net/gh/...@main/fnpack.json`（purge 前） | **4427B / 只有 1.1.29 一个版本** ❌ |
+
+CDN 节点还缓存着上一版精简源文件（`Age` 约 8.8 小时），所以仓库根地址模式短暂地看不到历史版本，而直链读 raw 是最新的。**已内置自动刷新**：
+
+- `.github/workflows/purge-cdn.yml`：每次 `fnpack.json` 或 `assets/**` 推送到 `main` 时，自动调用 jsDelivr purge API 清除缓存；也支持在 Actions 页面手动触发（`workflow_dispatch`）。
+- `scripts/purge_cdn.py`：本地手动刷新，并核对 CDN 内容与本地 `fnpack.json` 是否一致。
+
+```bash
+python scripts/purge_cdn.py            # 仅刷新缓存
+python scripts/purge_cdn.py --check   # 刷新并核对两个 CDN 节点
+```
+
+> 注意 CDN 刷新解决的是「服务器侧旧内容」；客户端自身还有短时缓存（`ETag` / `Last-Modified` 条件请求），必要时仍需删除源重新添加。
 
 ## 目录结构
 
@@ -40,6 +63,8 @@ V2 不强制目录布局，客户端只按 `fnpack.json` 里的 URL 定位资源
 fndepot-source/
 ├── fnpack.json                      # V2 源索引（单文件模式，含全部历史版本）
 ├── README.md                        # 本说明
+├── .github/workflows/
+│   └── purge-cdn.yml                # push 后自动刷新 jsDelivr CDN 缓存
 ├── assets/
 │   ├── oesp-fanctl.png              # 图标
 │   ├── ipsense.png                  # 图标
@@ -51,6 +76,7 @@ fndepot-source/
 └── scripts/
     ├── build_source.py              # 从 GitHub Releases 自动重建 fnpack.json
     ├── verify_source.py             # 发布前校验
+    ├── purge_cdn.py                 # 手动刷新 CDN 缓存并核对一致性
     └── official-v2-sample.json      # FnDepot 官方 V2 源样例快照，供字段对照
 ```
 
@@ -123,6 +149,10 @@ python scripts/verify_source.py --check-urls       # 联网 HEAD 检查所有绝
 
 # 3. 提交并推送（GitHub 仓库模式会自动生效）
 git add fnpack.json && git commit -m "chore: 同步上游全部版本" && git push
+
+# 4. 刷新 CDN 缓存（仓库根地址模式需要）
+#    .github/workflows/purge-cdn.yml 会在 push 时自动执行；本地也可手动：
+python scripts/purge_cdn.py --check
 ```
 
 若同时替换了预览图，把 `assets/preview/` 一起 `git add`。如果 GitHub API 触发限流，可设置 `GITHUB_TOKEN` 环境变量后再运行生成脚本。
@@ -150,4 +180,4 @@ python scripts/verify_source.py --check-manifest --check-urls
 
 主源 JSON ≤ 约 2MB · 单个源 ≤ 5000 应用 · 单应用 ≤ 100 版本 · 单应用最多读取 8 张预览图 · 图标建议 < 500KB · 预览图单张尽量 < 2MB · 所有 URL 只允许 `http` / `https`（相对 URL 亦可），不要放用户名、密码或长期令牌。
 
-运行时语言以 fnOS 环境变量 `TRIM_SYS_LANGUAGE` 为准，不以浏览器 Cookie 或 `Accept-Language` 为准；本源不提供 `i18n`，所有语言环境最终回退到中文基础字段。
+源和详情请求使用短时缓存、`ETag` 与 `Last-Modified` 条件请求；同步失败时客户端会保留上一次有效缓存，不会用空结果覆盖。运行时语言以 fnOS 环境变量 `TRIM_SYS_LANGUAGE` 为准，不以浏览器 Cookie 或 `Accept-Language` 为准；本源不提供 `i18n`，所有语言环境最终回退到中文基础字段。
