@@ -31,6 +31,17 @@
       "is_docker": false,
       "service_port": "",
       "releases": {
+        "1.15": {
+          "changelog": "新增命令行工具与配置校验",
+          "updated_at": "2026-10-16T18:23:07+08:00",
+          "packages": {
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/oesp-fanctl/releases/download/v1.15.0/oesp-fanctl_1.15_arm.fpk",
+              "size": 64717,
+              "sha256": "592bab3c33c4612a85f3e7d483100fe67f2e0ceb28a0bd0ec45a5006b9c111ca"
+            }
+          }
+        },
         "1.16": {
           "changelog": "修掉「没到温度就停风扇」，新增启停防抖与硬盘休眠开关",
           "updated_at": "2026-10-27T12:04:03+08:00",
@@ -68,6 +79,336 @@
       "service_port": "",
       "os_min_version": "1.1.8",
       "releases": {
+        "1.1.14": {
+          "changelog": "敲门网关请求日志接入 · x86 / ARM / all 三架构包",
+          "updated_at": "2026-11-16T00:00:37+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.14/ipsense_1.1.14_all.fpk",
+              "size": 4341230,
+              "sha256": "415a0fe0757e3a9bffe8941604a856840a62debe10162cddcfb32847311e863c"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.14/ipsense_1.1.14_x86.fpk",
+              "size": 4341207,
+              "sha256": "288de8f4f4bc94221dcf5d02233e733bb1fcbdda73e5962c9b16840288a7f0d6"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.14/ipsense_1.1.14_arm.fpk",
+              "size": 4341207,
+              "sha256": "7d2761abe52ea93f6dd3c44fb5f5547c4071a37d1c693807a70125ce15bc340e"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.15": {
+          "changelog": "八项修复与排障体系",
+          "updated_at": "2026-11-19T01:16:09+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.15/ipsense_1.1.15_all.fpk",
+              "size": 4350131,
+              "sha256": "019d802f5aeee343f5bc62dd71e041783959333a003b0db1cd203a1b650242b5"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.15/ipsense_1.1.15_x86.fpk",
+              "size": 4350109,
+              "sha256": "0c7ffb75555f1d9b9e4a4e405f3c3757650ad01d632a3424c27567e13b9d7bda"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.15/ipsense_1.1.15_arm.fpk",
+              "size": 4350109,
+              "sha256": "d450c282283368ea30d69a1d8da589a18e99898e4104c6a53926740b7673f510"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.16": {
+          "changelog": "真机六项反馈修复与 SDK 路径回归",
+          "updated_at": "2026-11-19T11:05:04+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.16/ipsense_1.1.16_all.fpk",
+              "size": 4360297,
+              "sha256": "53315cc8bc6f45a4ad29f15111e80a9f1a7db56ecae9ebbc2419478dcf85c0fe"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.16/ipsense_1.1.16_x86.fpk",
+              "size": 4360274,
+              "sha256": "b898abb6303a01d4e235bf115cf9698dde2991a9b22d8b92ec3b1551696807a4"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.16/ipsense_1.1.16_arm.fpk",
+              "size": 4360274,
+              "sha256": "da2c0d40725b6ea189c7ff1e3fc50cd3eb650d2fbad2d6ca9d77a293da1fa87e"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.17": {
+          "changelog": "运行时报错一键导出与诊断包并入",
+          "updated_at": "2026-11-19T14:47:40+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.17/ipsense_1.1.17_all.fpk",
+              "size": 4369238,
+              "sha256": "4dc466519eb4aa2ea263d691a042e18e7161c4e92133033de992d44dd3a093b0"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.17/ipsense_1.1.17_x86.fpk",
+              "size": 4369215,
+              "sha256": "b25f39dfba35371e0c4e1fa6b974c68164e8468b49aa79f62b428bc12629245a"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.17/ipsense_1.1.17_arm.fpk",
+              "size": 4369215,
+              "sha256": "91306628ceb67823b164b33abfed793e9ba33d8fddbc22930c4b13cf3a90780b"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.18": {
+          "changelog": "版本 1.1.18",
+          "updated_at": "2026-11-19T17:25:11+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.18/ipsense_1.1.18_all.fpk",
+              "size": 4520507,
+              "sha256": "4dfce13763a4056b1fb22cd0edff042e8b457a576b7f51cc7bef0e691cdb1bdd"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.18/ipsense_1.1.18_x86.fpk",
+              "size": 4520484,
+              "sha256": "dc9604219fd3aa864912d58ecf837152d7a0b80cba6305282b3d527c161eb7c6"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.18/ipsense_1.1.18_arm.fpk",
+              "size": 4520484,
+              "sha256": "3a9e047873509c4d319cab62b6a8d0c79da34995b1c1b975c36f3bd7b6351a0d"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.19": {
+          "changelog": "版本 1.1.19",
+          "updated_at": "2026-11-19T18:29:22+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.19/ipsense_1.1.19_all.fpk",
+              "size": 4521143,
+              "sha256": "b2b552ff398c340edc43b14d3676eaee8f2cc748bdb1396931e607aa39b5c623"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.19/ipsense_1.1.19_x86.fpk",
+              "size": 4521120,
+              "sha256": "827d6728108e47f34f24227acadce5b2b7ef55900a1950ac6140da04ec9392b0"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.19/ipsense_1.1.19_arm.fpk",
+              "size": 4521120,
+              "sha256": "f2646b22dc817791a6928f5ebcdf41f547dac759e1440ce843354f47ab3963a0"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.20": {
+          "changelog": "IP 来源记录合并 · 路径明细收敛到画像",
+          "updated_at": "2026-11-20T01:06:56+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.20/ipsense_1.1.20_all.fpk",
+              "size": 4523485,
+              "sha256": "bac47d576b5e9a047faf1ce89ca3146a30727148fefdc84eecf90787f8b3bbb3"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.20/ipsense_1.1.20_x86.fpk",
+              "size": 4523462,
+              "sha256": "b9ea1a71c118d56e2b2e13c466c15893a9d41c87b92ddfae9985900c85d7fb2e"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.20/ipsense_1.1.20_arm.fpk",
+              "size": 4523462,
+              "sha256": "92c8059eeed658d978e7144dd2a3be0deeab151e3f08056ea155a5418cdce5cc"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.21": {
+          "changelog": "三图合一 · 右上角地图模式切换",
+          "updated_at": "2026-11-20T01:07:20+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.21/ipsense_1.1.21_all.fpk",
+              "size": 4525251,
+              "sha256": "50effc003ac73c137cad1d6ef86cda2d98348344af893be70e4bb0fa5c7f7fce"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.21/ipsense_1.1.21_x86.fpk",
+              "size": 4525228,
+              "sha256": "8f80033b2df329aa1289133a375d329635aa78e70f3e59121aac8b8568204bec"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.21/ipsense_1.1.21_arm.fpk",
+              "size": 4525228,
+              "sha256": "a3eb770259fcae1bf8882105469a734f20a2c57f1273811745caf6a238f1f346"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.22": {
+          "changelog": "方案 B：IP 标注与提交单 · 处置交给外部 agent",
+          "updated_at": "2026-11-21T02:39:53+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.22/ipsense_1.1.22_all.fpk",
+              "size": 4533608,
+              "sha256": "122ede7abe0cc37c113082be3c32837d88a105968bd45783907cf6f8ade4cb2b"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.22/ipsense_1.1.22_x86.fpk",
+              "size": 4533586,
+              "sha256": "afad411f4d5c7ca760cfc8a4eb0de37575d6fc5a6bcfd2698b2cbf766b0af736"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.22/ipsense_1.1.22_arm.fpk",
+              "size": 4533585,
+              "sha256": "a746b7fa809170b16188018498e0e8bc07e53e119de7bc543417537bea98e030"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.23": {
+          "changelog": "标注输入区放大 · 三个弹层弹出动画",
+          "updated_at": "2026-11-21T02:40:15+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.23/ipsense_1.1.23_all.fpk",
+              "size": 4536025,
+              "sha256": "9046aaa9fe1a448304814dd7b10fcd172ff15d94d58c1c07a85da0154356f693"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.23/ipsense_1.1.23_x86.fpk",
+              "size": 4536002,
+              "sha256": "3517a88985a887fe4b086770887b83ebde52149a0b622a429c78c1666916b544"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.23/ipsense_1.1.23_arm.fpk",
+              "size": 4536002,
+              "sha256": "5b482e57a38ef0a22272be397230b12e7f3cc95e9b67a1e85caaeab6f7ef4308"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.24": {
+          "changelog": "写标注独立窗口 · 四弹层淡入淡出",
+          "updated_at": "2026-11-21T02:40:38+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.24/ipsense_1.1.24_all.fpk",
+              "size": 4537414,
+              "sha256": "93910bb5d7d316567ca57aa2737267adf98d1b1205ba15f158d6f977366a284f"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.24/ipsense_1.1.24_x86.fpk",
+              "size": 4537391,
+              "sha256": "dd9a9546d96549bbaaf233f0207b3a2d92220fb00785cf2f473841aa615d5184"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.24/ipsense_1.1.24_arm.fpk",
+              "size": 4537391,
+              "sha256": "6fa311a2bc52f97d5e3a7465c0046bcf6aa3bb8c41738e2ad78dc1da0d5296ca"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.25": {
+          "changelog": "提交单四区看板 · mh 唯一读写接口",
+          "updated_at": "2026-11-23T16:00:24+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.25/ipsense_1.1.25_all.fpk",
+              "size": 4545094,
+              "sha256": "6e4ae1a1d7994ae25db05b58a6e44cf955d39bcf6808244f49021e6a53a8ad8a"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.25/ipsense_1.1.25_x86.fpk",
+              "size": 4545071,
+              "sha256": "61e3ab3e3ba605381c6d9f0b658ac2aecce6598e0435522b5861520bc12cd8aa"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.25/ipsense_1.1.25_arm.fpk",
+              "size": 4545071,
+              "sha256": "713e0e2d0a0ac216ae1e6cc171a2e9bdd7025e152dc3f95948f766ff1617a517"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.26": {
+          "changelog": "画像标注行只留输入框",
+          "updated_at": "2026-11-23T16:00:57+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.26/ipsense_1.1.26_all.fpk",
+              "size": 4543991,
+              "sha256": "26cbef93958eccd5702704296f68ae1e25bcaf94e29363e1b1d561ef43d46381"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.26/ipsense_1.1.26_x86.fpk",
+              "size": 4543968,
+              "sha256": "b656f1e0036f8166ad4fbfdc107c39b3f417b63539ef41477c83a3e9221ef895"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.26/ipsense_1.1.26_arm.fpk",
+              "size": 4543968,
+              "sha256": "53719985fc92b437ddce400a0d60ad310a3dd41cd3e7b58819d83b1732596c95"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.27": {
+          "changelog": "密钥授权可视可撤销 · 标注即指令",
+          "updated_at": "2026-11-23T16:01:20+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.27/ipsense_1.1.27_all.fpk",
+              "size": 4550575,
+              "sha256": "a874395623203715331b32781d6df76bc2f8d2c11ae50e1ba6514809698a6871"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.27/ipsense_1.1.27_x86.fpk",
+              "size": 4550552,
+              "sha256": "9963b5d2a4d99ab6d26d5d47ab1641ab6e6d81389ff950977fbbaf2c20bdcf29"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.27/ipsense_1.1.27_arm.fpk",
+              "size": 4550552,
+              "sha256": "e68cd85a0dc6101b6b2138b7e504db100ece976a840182017f465520159d7f5b"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "1.1.28": {
+          "changelog": "密钥授权移到右上角浮层",
+          "updated_at": "2026-11-23T16:01:42+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.28/ipsense_1.1.28_all.fpk",
+              "size": 4551763,
+              "sha256": "f69153d3a87d9c0dbfb858c3801952665d753a66e832156e8a0bafd0fe4796ea"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.28/ipsense_1.1.28_x86.fpk",
+              "size": 4551740,
+              "sha256": "6d2e536683648a10679e7c99406336173bc6cb7b1698698caa59a53c56d2cf75"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.28/ipsense_1.1.28_arm.fpk",
+              "size": 4551740,
+              "sha256": "4f3db459dc8ec475dfaafe3f52948282ad46eb8523ccb10505b51e4e0b9514e4"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
         "1.1.29": {
           "changelog": "mh setup 一步步引导 · fw 收敛原生防火墙",
           "updated_at": "2026-11-23T16:02:05+08:00",
@@ -86,6 +427,28 @@
               "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v1.1.29/ipsense_1.1.29_arm.fpk",
               "size": 4552278,
               "sha256": "8aea638e9fe39f6a1e56f44e38c08771c87b6fa728e7cfeba0db6a5327ac1876"
+            }
+          },
+          "os_min_version": "1.1.8"
+        },
+        "2.0.0": {
+          "changelog": "平级 tab 与移动端 · 10 渠道预警 · 卫星底图",
+          "updated_at": "2026-11-26T19:01:54+08:00",
+          "packages": {
+            "all": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v2.0.0/ipsense_2.0.0_all.fpk",
+              "size": 4584686,
+              "sha256": "6e07efb4ff14a9a1cdbfd0aabecbbfb0a31be87b293d8fa9eb12bfcd2a6374e3"
+            },
+            "x86": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v2.0.0/ipsense_2.0.0_x86.fpk",
+              "size": 4584664,
+              "sha256": "a87f42a6cf6a4aa45fca9a91899354e74bde37036f5402765dc3a31a0f076019"
+            },
+            "arm": {
+              "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v2.0.0/ipsense_2.0.0_arm.fpk",
+              "size": 4584664,
+              "sha256": "db2877a8304cfb0c492d49548d73e4576bbd2ddbc534bfbe00a6458b6522cfa6"
             }
           },
           "os_min_version": "1.1.8"

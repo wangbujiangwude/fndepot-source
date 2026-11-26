@@ -1,11 +1,13 @@
 # 老汪的飞牛应用源 · FnDepot 外部应用源 V2
 
-按 [EWEDLCM/FnDepot「外部应用源 V2 编写说明」](https://github.com/EWEDLCM/FnDepot) 编写，收录两个飞牛 fnOS 原生应用。**每个应用只保留最新版本，简介统一为中文，各配 2 张真实软件界面预览图。**
+按 [EWEDLCM/FnDepot「外部应用源 V2 编写说明」](https://github.com/EWEDLCM/FnDepot) 编写，收录两个飞牛 fnOS 原生应用。**保留全部历史版本，简介统一为中文，各配 2 张真实软件界面预览图。**
 
-| appname | 应用 | 平台 | 分类 | 当前版本 | 安装包 |
+| appname | 应用 | 平台 | 分类 | 版本范围 | 安装包 |
 | --- | --- | --- | --- | --- | --- |
-| `oesp-fanctl` | OESP风扇助手 | `arm` | 系统工具、硬件驱动 | `1.16` | `arm` |
-| `ipsense` | IP 动态感知 | `all` | 系统工具 | `1.1.29` | `all` / `x86` / `arm` |
+| `oesp-fanctl` | OESP风扇助手 | `arm` | 系统工具、硬件驱动 | `1.15` ~ `1.16`（2 版） | 2 个（`arm`） |
+| `ipsense` | IP 动态感知 | `all` | 系统工具 | `1.1.14` ~ `2.0.0`（17 版） | 51 个（`all` / `x86` / `arm`） |
+
+合计 53 个安装包，`fnpack.json` 约 22KB。
 
 - **OESP风扇助手**：为 OES Plus（Amlogic S922X）刷 fnOS 打造的 GPIO 直控温控风扇工具，仅 ARM64 / OES Plus 可用，因此 `platform` 限定为 `arm`，x86 设备上客户端会自动隐藏。
 - **IP 动态感知**：6 类访问与扫描日志的可视化观测应用，只观测、不封禁、不改防火墙。上游同时发布 `all`、`x86`、`arm` 三个包，正好对应 V2 的架构选择顺序 `packages.[当前架构] -> packages.all`：x86 / ARM 设备优先取专用包，`all` 作为通用回退。
@@ -28,7 +30,7 @@ https://raw.githubusercontent.com/wangbujiangwude/fndepot-source/main/fnpack.jso
 
 仓库根地址模式要求根目录**必须**存在大小写完全一致的 `fnpack.json`；若改用其它文件名或子目录，请给用户提供 JSON 直链，而不是仓库根地址。
 
-> 修改源后客户端可能仍显示旧缓存，重新添加源或刷新外部源即可看到中文简介与预览图。
+> 修改源后客户端可能仍显示旧缓存，重新添加源或刷新外部源即可看到全部历史版本、中文简介与预览图。
 
 ## 目录结构
 
@@ -36,7 +38,7 @@ V2 不强制目录布局，客户端只按 `fnpack.json` 里的 URL 定位资源
 
 ```
 fndepot-source/
-├── fnpack.json                      # V2 源索引（单文件模式，每应用仅最新版本）
+├── fnpack.json                      # V2 源索引（单文件模式，含全部历史版本）
 ├── README.md                        # 本说明
 ├── assets/
 │   ├── oesp-fanctl.png              # 图标
@@ -108,11 +110,11 @@ IP 动态感知上游仓库里没有现成界面截图，因此用仓库自带�
 上游项目发新版后：
 
 ```bash
-# 1. 重建源（默认只保留每个应用的最新版本，历史版本不写入）
+# 1. 重建源（默认保留全部历史版本，新版本追加到 releases）
 python scripts/build_source.py
 
-# 需要全部历史版本时（本源默认不用）
-python scripts/build_source.py --all-versions
+# 只想临时生成「仅最新版本」的源时（注意：会覆盖线上 fnpack.json）
+python scripts/build_source.py --latest-only
 
 # 2. 校验
 python scripts/verify_source.py
@@ -120,7 +122,7 @@ python scripts/verify_source.py --check-manifest   # 联网核对 appname / 最�
 python scripts/verify_source.py --check-urls       # 联网 HEAD 检查所有绝对 URL
 
 # 3. 提交并推送（GitHub 仓库模式会自动生效）
-git add fnpack.json && git commit -m "chore: 同步上游最新版本" && git push
+git add fnpack.json && git commit -m "chore: 同步上游全部版本" && git push
 ```
 
 若同时替换了预览图，把 `assets/preview/` 一起 `git add`。如果 GitHub API 触发限流，可设置 `GITHUB_TOKEN` 环境变量后再运行生成脚本。
@@ -134,6 +136,8 @@ git add fnpack.json && git commit -m "chore: 同步上游最新版本" && git pu
 ## 校验清单
 
 `verify_source.py` 覆盖官方第 12 节的检查项：严格 JSON、`schema_version`、`source_info`、appname 合法性、必填元数据、固定分类与平台枚举、`run_as` / `install_type` / `is_docker` 类型、URL 协议与相对资源是否存在、`preview_urls` 数量、`packages` 架构键、`download_url` 必填、`sha256` / `size` 格式、版本数与 i18n 字段层级，并可选联网核对 FPK manifest 与 URL 可达性。
+
+`--check-urls` 的兜底：本机代理的 `github.com` 隧道偶发 `502` 时，HEAD 失败的下载地址会再用 GitHub API 的 Release 资产清单核对 URL / `size` / `sha256`，页面类 URL 则核对仓库存在性；一致即视为有效，并在输出里标注「API 资产核对一致」，避免把网络抖动误判成源写错。
 
 手工复核命令（Git Bash / Linux）：
 

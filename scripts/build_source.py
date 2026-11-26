@@ -13,12 +13,12 @@ sha256 / size 直接取 GitHub Release asset 的 digest / size，不手工填写
 约定（2026-11-25 起）：
   - 简介只写中文基础字段，不提供 i18n.en-US 覆盖。V2 回退顺序里 en-US
     排在基础字段之前，只要存在 en-US，中文环境下客户端也会显示英文。
-  - 默认只保留每个应用的最新版本；要拉全部历史版本用 --all-versions。
+  - 默认保留全部历史版本；只要最新版本用 --latest-only。
   - 每个应用固定配 2 张预览图（真实软件界面），放在 assets/preview/。
 
 用法：
-  python scripts/build_source.py                  # 每个应用只保留最新版本（默认）
-  python scripts/build_source.py --all-versions  # 生成全部历史版本
+  python scripts/build_source.py                  # 生成全部历史版本（默认）
+  python scripts/build_source.py --latest-only   # 每个应用只保留最新版本
   python scripts/build_source.py --dry-run       # 只打印统计，不写文件
 """
 
@@ -225,14 +225,14 @@ def _app_key_by_repo(repo: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--all-versions", action="store_true", help="保留全部历史版本（默认只保留最新版本）")
+    ap.add_argument("--latest-only", action="store_true", help="每个应用只保留最新版本（默认保留全部历史版本）")
     ap.add_argument("--dry-run", action="store_true", help="只打印统计，不写 fnpack.json")
     args = ap.parse_args()
 
     apps_out = {}
     for key, meta in APPS.items():
         print(f"拉取 {OWNER}/{meta['repo']} 的 Releases …")
-        rels = build_releases(meta["repo"], not args.all_versions)
+        rels = build_releases(meta["repo"], args.latest_only)
         if not rels:
             print(f"  ✗ {key}: 没有可用版本，终止", file=sys.stderr)
             return 1
