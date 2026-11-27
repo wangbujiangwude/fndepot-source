@@ -437,18 +437,18 @@
           "packages": {
             "all": {
               "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v2.0.0/ipsense_2.0.0_all.fpk",
-              "size": 4584686,
-              "sha256": "6e07efb4ff14a9a1cdbfd0aabecbbfb0a31be87b293d8fa9eb12bfcd2a6374e3"
+              "size": 4582579,
+              "sha256": "df5c6f86b21a2a980ad1d5693da4520e34044a54fdc5945b10398b8a05a3b11a"
             },
             "x86": {
               "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v2.0.0/ipsense_2.0.0_x86.fpk",
-              "size": 4584664,
-              "sha256": "a87f42a6cf6a4aa45fca9a91899354e74bde37036f5402765dc3a31a0f076019"
+              "size": 4582574,
+              "sha256": "e754b184e3423709ba04757017f664d0cbe1ecedcba7240e60563a8014fa288b"
             },
             "arm": {
               "download_url": "https://github.com/wangbujiangwude/ipsense-fnos/releases/download/v2.0.0/ipsense_2.0.0_arm.fpk",
-              "size": 4584664,
-              "sha256": "db2877a8304cfb0c492d49548d73e4576bbd2ddbc534bfbe00a6458b6522cfa6"
+              "size": 4582579,
+              "sha256": "dcc7632270cabab0ff3b550f2d0afef3d306ac2d529a77a35d35e41908f1d6d3"
             }
           },
           "os_min_version": "1.1.8"
