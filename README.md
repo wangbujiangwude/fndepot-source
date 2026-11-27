@@ -176,6 +176,26 @@ jq empty fnpack.json
 python scripts/verify_source.py --check-manifest --check-urls
 ```
 
+## 常见问题：同一个源，两个界面「简介」不一样
+
+2026-11-27 实测：两个客户端添加同一个源，IP 动态感知的「简介」一个是简洁中文简介（含 `企鹅群：1132993836`）+ 2 张预览图，另一个却是「2.0.0 大版本更新：…」长篇更新日志 + 4 张图。**源本身没有问题**：本地 `fnpack.json` 与 `raw.githubusercontent.com`、`cdn.jsdelivr.net` 逐字节一致（22306B），4 次提交里 `desc` 一直是 235 字简洁中文、`preview_urls` 一直是 2 张，从未出现长文或 4 张图。差异来自两边读的不是同一份数据。
+
+| 界面 | 实际读取 | 显示结果 |
+| --- | --- | --- |
+| 外部源详情页 | `fnpack.json` → `apps.ipsense.desc` | 简洁中文简介 + `preview_urls` 的 2 张图 |
+| 已安装应用详情页 / 网页端 | 已安装 FPK 内 `manifest` 的 `changelog`（2271 字累积更新日志），或本地旧缓存 | 长篇「2.0.0 大版本更新：…」+ 非源内的预览图 |
+
+V2 规范里 `desc` 才是「应用简介」，`changelog` 只是「版本更新说明」，`readme_url` 是独立的 README 分页入口，三者不是同一个字段。已安装态展示 FPK 内 `manifest` 的内容而不读源的 `desc`，所以会出现「同一个源、两种介绍」。已从线上 2.0.0 FPK 用 HTTP Range 增量解压验证：包内 `desc` 与源完全一致，`changelog` 正是那段长文。
+
+按顺序排查并统一：
+
+1. **删源重加**：客户端对源和详情用 `ETag` / `Last-Modified` 短缓存，同步失败还会保留上一次有效缓存。两个客户端都删除该源再重新添加。
+2. **统一用 JSON 直链**：`https://raw.githubusercontent.com/wangbujiangwude/fndepot-source/main/fnpack.json`。仓库根地址走 jsDelivr CDN，`@main` 分支缓存很长；官方 `valid_sources.txt` 收录的是本源的仓库根地址，实测 `fastly.jsdelivr.net` 在多次 purge 后仍返回旧快照（旧文件恰好同为 22306B，只差 2.0.0 三个包的 `size` / `sha256`）。
+3. **卸载重装**：显示长文的那台，把 IP 动态感知卸载后重新安装 2.0.0，让它读新 FPK 的 `manifest`。
+4. **核对版本与哈希**：两边都应是 2.0.0 / 4.37 MB，`size` 与 `sha256` 与 `fnpack.json` 一致。
+
+> 根因复盘：为把简介改回简洁版，曾在 2.0.0 版本号不变的情况下**原地替换了三个 FPK 并改写 `sha256` / `size`**，这违反了 V2「已发布 FPK 视为不可变、不要静默替换同版本 FPK」的发布纪律。已经下载 / 安装过旧 2.0.0 的客户端本地仍是旧包，于是同一源、不同安装时间，展示必然分叉。以后内容变更一律发新版本号（如 2.0.1）+ 新 `download_url` / `size` / `sha256`。
+
 ## 客户端限制备忘
 
 主源 JSON ≤ 约 2MB · 单个源 ≤ 5000 应用 · 单应用 ≤ 100 版本 · 单应用最多读取 8 张预览图 · 图标建议 < 500KB · 预览图单张尽量 < 2MB · 所有 URL 只允许 `http` / `https`（相对 URL 亦可），不要放用户名、密码或长期令牌。
